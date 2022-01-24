@@ -93,10 +93,11 @@ const listarlugares = async(lugares = []) => {
         name: '0.'.green + 'Cancelar'
     });
 
-
     const { id } = await inquirer.prompt(preguntas);
-    return id;
 
+
+
+    return id;
 
 }
 

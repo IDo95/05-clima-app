@@ -18,6 +18,7 @@ const main = async() => {
                 const termino = await leerinput('Ciudad: ');
                 const lugares = await busqudamodel.ciudad(termino);
                 const id = await listarlugares(lugares);
+                console.clear();
                 if (id === '0')
                     continue;
 
@@ -45,7 +46,7 @@ const main = async() => {
                 //console.log('esta en 2');
                 // console.log(busqudamodel.historial);
 
-                busqudamodel.historial.forEach((lugar, i) => {
+                busqudamodel.historialcapitalizado.forEach((lugar, i) => {
                     const idx = `${i+1}`.green;
                     console.log(`${idx}. ${lugar}`)
 

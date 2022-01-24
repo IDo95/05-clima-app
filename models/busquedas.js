@@ -4,10 +4,21 @@ const axios = require('axios');
 class busquedas {
     historial = [];
     dbpath = './db/database.json';
+
+
+
     constructor() {
         //leer db si exist
+        this.leerdb();
     }
 
+    get historialcapitalizado() {
+        return this.historial.map(lugar => {
+            let palabras = lugar.split(' ');
+            palabras = palabras.map(p => p[0].toUpperCase() + p.substring(1)); /*capitalzando cada palabra*/
+            return palabras.join(' ')
+        })
+    }
 
     async ciudad(lugar = '') {
         console.log('ciudad', lugar);
@@ -71,7 +82,9 @@ class busquedas {
             return;
         }
 
-        this.historial.unshift(lugar);
+        this.historial = this.historial.splice(0, 5);
+
+        this.historial.unshift(lugar.toLocaleLowerCase());
         this.guardardb();
     }
 
@@ -82,6 +95,15 @@ class busquedas {
             historial: this.historial
         }
         fs.writeFileSync(this.dbpath, JSON.stringify(payload))
+    }
+    leerdb() {
+        if (!fs.existsSync(this.dbpath)) {
+            return;
+        }
+        const info = fs.readFileSync(this.dbpath, { encoding: 'utf-8' });
+        const data = JSON.parse(info);
+        this.historial = data.historial;
+
     }
 
 }
